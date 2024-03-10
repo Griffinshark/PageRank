@@ -1,0 +1,523 @@
+<html>
+<head>
+<title>test.cpp</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #b3ae60;}
+.s1 { color: #bcbec4;}
+.s2 { color: #6aab73;}
+.s3 { color: #cf8e6d;}
+.s4 { color: #bcbec4;}
+.s5 { color: #2aacb8;}
+.s6 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+test.cpp</font>
+</center></td></tr></table>
+<pre><span class="s0">#define </span><span class="s1">CATCH_CONFIG_MAIN</span>
+<span class="s0">#include </span><span class="s2">&lt;catch2/catch_test_macros.hpp&gt;</span>
+<span class="s0">#include </span><span class="s2">&lt;catch2/matchers/catch_matchers_floating_point.hpp&gt;</span>
+<span class="s0">#include </span><span class="s2">&lt;iostream&gt;</span>
+<span class="s0">#include </span><span class="s2">&quot;AdjacencyList.h&quot;</span>
+
+<span class="s3">bool </span><span class="s1">IsPageMapped</span><span class="s4">(</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string element</span><span class="s4">, </span><span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s1">std</span><span class="s4">::</span><span class="s1">vector</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">pair</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt;&gt;&gt;&amp; </span><span class="s1">pageMap</span><span class="s4">)</span>
+<span class="s4">{</span>
+    <span class="s3">if </span><span class="s4">(</span><span class="s1">pageMap</span><span class="s4">.</span><span class="s1">find</span><span class="s4">(</span><span class="s1">element</span><span class="s4">) == </span><span class="s1">pageMap</span><span class="s4">.</span><span class="s1">end</span><span class="s4">())</span>
+    <span class="s4">{</span>
+        <span class="s3">return false</span><span class="s4">;</span>
+    <span class="s4">}</span>
+    <span class="s3">else</span>
+    <span class="s4">{</span>
+        <span class="s3">return true</span><span class="s4">;</span>
+    <span class="s4">}</span>
+<span class="s4">}</span>
+
+<span class="s3">int </span><span class="s1">DegreeCounter</span><span class="s4">(</span><span class="s1">std</span><span class="s4">::</span><span class="s1">vector</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">pair</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">&gt;&gt;&amp; </span><span class="s1">inputHolder</span><span class="s4">, </span><span class="s1">std</span><span class="s4">::</span><span class="s1">string page</span><span class="s4">)</span>
+<span class="s4">{</span>
+    <span class="s3">int </span><span class="s1">count</span><span class="s4">{</span><span class="s5">0</span><span class="s4">};</span>
+
+    <span class="s3">for </span><span class="s4">(</span><span class="s1">size_t i </span><span class="s4">= </span><span class="s5">0</span><span class="s4">; </span><span class="s1">i </span><span class="s4">&lt; </span><span class="s1">inputHolder</span><span class="s4">.</span><span class="s1">size</span><span class="s4">(); ++</span><span class="s1">i</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s3">if </span><span class="s4">(</span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">first </span><span class="s4">== </span><span class="s1">page</span><span class="s4">)</span>
+        <span class="s4">{</span>
+            <span class="s4">++</span><span class="s1">count</span><span class="s4">;</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+    <span class="s3">return </span><span class="s1">count</span><span class="s4">;</span>
+<span class="s4">}</span>
+
+<span class="s1">TEST_CASE</span><span class="s4">(</span><span class="s2">&quot;Different Capitalization and Zero Connect&quot;</span><span class="s4">, </span><span class="s2">&quot;[General]&quot;</span><span class="s4">)</span>
+<span class="s4">{</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">vector</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">pair</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">&gt;&gt; </span><span class="s1">inputHolder </span><span class="s4">=</span>
+            <span class="s4">{</span>
+                <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;apple.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;gmail.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">, </span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;apple.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;gmail.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;aPPle.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;aPPle.com&quot;</span><span class="s4">, </span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;aPPle.com&quot;</span><span class="s4">}</span>
+            <span class="s4">};</span>
+
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">expectedOutput </span><span class="s4">=</span>
+                <span class="s4">{</span>
+                        <span class="s4">{</span><span class="s2">&quot;aPPle.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">9.0</span><span class="s4">},</span>
+                        <span class="s4">{</span><span class="s2">&quot;apple.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">9.0</span><span class="s4">},</span>
+                        <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s5">19.0</span><span class="s4">/</span><span class="s5">36.0</span><span class="s4">},</span>
+                        <span class="s4">{</span><span class="s2">&quot;gmail.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">9.0</span><span class="s4">},</span>
+                        <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s5">0.0</span><span class="s4">},</span>
+                        <span class="s4">{</span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">, </span><span class="s5">5.0</span><span class="s4">/</span><span class="s5">36.0</span><span class="s4">}</span>
+                <span class="s4">};</span>
+
+    <span class="s6">//Create a graph object</span>
+    <span class="s1">AdjacencyList generatedList</span><span class="s4">;</span>
+
+    <span class="s3">int </span><span class="s1">outDegree</span><span class="s4">{</span><span class="s5">0</span><span class="s4">};</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">string fromPage</span><span class="s4">;</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">string toPage</span><span class="s4">;</span>
+
+    <span class="s6">// Go through input and generate map / adjacency list</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s1">size_t i </span><span class="s4">= </span><span class="s5">0</span><span class="s4">; </span><span class="s1">i </span><span class="s4">&lt; </span><span class="s1">inputHolder</span><span class="s4">.</span><span class="s1">size</span><span class="s4">(); ++</span><span class="s1">i</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s1">fromPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">first</span><span class="s4">;</span>
+        <span class="s1">toPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">second</span><span class="s4">;</span>
+
+        <span class="s6">// Grab 'out degree' of 'fromPage'</span>
+        <span class="s1">outDegree </span><span class="s4">= </span><span class="s1">DegreeCounter</span><span class="s4">(</span><span class="s1">inputHolder</span><span class="s4">, </span><span class="s1">fromPage</span><span class="s4">);</span>
+
+        <span class="s6">// Add to map with 'toPage' key the 'fromPage' and it's 'd'</span>
+        <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">toPage</span><span class="s4">].</span><span class="s1">emplace_back</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s1">outDegree</span><span class="s4">);</span>
+
+        <span class="s6">// Ensure from page is mapped</span>
+        <span class="s3">if </span><span class="s4">(!</span><span class="s1">IsPageMapped</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()))</span>
+        <span class="s4">{</span>
+            <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">fromPage</span><span class="s4">];</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+    <span class="s6">//Created_Graph.PageRank(power_iterations);</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">ranks </span><span class="s4">= </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">PageRank</span><span class="s4">(</span><span class="s5">3</span><span class="s4">);</span>
+
+    <span class="s3">auto </span><span class="s1">testsIter </span><span class="s4">= </span><span class="s1">expectedOutput</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">();</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s3">auto </span><span class="s1">ranksIter </span><span class="s4">= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">(); </span><span class="s1">ranksIter </span><span class="s4">!= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">end</span><span class="s4">(); ++</span><span class="s1">ranksIter</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s1">REQUIRE</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">first </span><span class="s4">== </span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">first</span><span class="s4">);</span>
+        <span class="s1">REQUIRE_THAT</span><span class="s4">(</span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s1">Catch</span><span class="s4">::</span><span class="s1">Matchers</span><span class="s4">::</span><span class="s1">WithinAbs</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s5">0.000000002</span><span class="s4">));</span>
+
+        <span class="s1">testsIter</span><span class="s4">++;</span>
+    <span class="s4">}</span>
+<span class="s4">}</span>
+
+<span class="s1">TEST_CASE</span><span class="s4">(</span><span class="s2">&quot;One Connection&quot;</span><span class="s4">, </span><span class="s2">&quot;[General]&quot;</span><span class="s4">)</span>
+<span class="s4">{</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">vector</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">pair</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">&gt;&gt; </span><span class="s1">inputHolder </span><span class="s4">=</span>
+            <span class="s4">{</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;apple.com&quot;</span><span class="s4">}</span>
+            <span class="s4">};</span>
+
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">expectedOutput </span><span class="s4">=</span>
+            <span class="s4">{</span>
+                    <span class="s4">{</span><span class="s2">&quot;apple.com&quot;</span><span class="s4">, </span><span class="s5">0</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s5">0</span><span class="s4">}</span>
+            <span class="s4">};</span>
+
+    <span class="s6">//Create a graph object</span>
+    <span class="s1">AdjacencyList generatedList</span><span class="s4">;</span>
+
+    <span class="s3">int </span><span class="s1">outDegree</span><span class="s4">{</span><span class="s5">0</span><span class="s4">};</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">string fromPage</span><span class="s4">;</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">string toPage</span><span class="s4">;</span>
+
+    <span class="s6">// Go through input and generate map / adjacency list</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s1">size_t i </span><span class="s4">= </span><span class="s5">0</span><span class="s4">; </span><span class="s1">i </span><span class="s4">&lt; </span><span class="s1">inputHolder</span><span class="s4">.</span><span class="s1">size</span><span class="s4">(); ++</span><span class="s1">i</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s1">fromPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">first</span><span class="s4">;</span>
+        <span class="s1">toPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">second</span><span class="s4">;</span>
+
+        <span class="s6">// Grab 'out degree' of 'fromPage'</span>
+        <span class="s1">outDegree </span><span class="s4">= </span><span class="s1">DegreeCounter</span><span class="s4">(</span><span class="s1">inputHolder</span><span class="s4">, </span><span class="s1">fromPage</span><span class="s4">);</span>
+
+        <span class="s6">// Add to map with 'toPage' key the 'fromPage' and it's 'd'</span>
+        <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">toPage</span><span class="s4">].</span><span class="s1">emplace_back</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s1">outDegree</span><span class="s4">);</span>
+
+        <span class="s6">// Ensure from page is mapped</span>
+        <span class="s3">if </span><span class="s4">(!</span><span class="s1">IsPageMapped</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()))</span>
+        <span class="s4">{</span>
+            <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">fromPage</span><span class="s4">];</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+    <span class="s6">//Created_Graph.PageRank(power_iterations);</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">ranks </span><span class="s4">= </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">PageRank</span><span class="s4">(</span><span class="s5">3</span><span class="s4">);</span>
+
+    <span class="s3">auto </span><span class="s1">testsIter </span><span class="s4">= </span><span class="s1">expectedOutput</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">();</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s3">auto </span><span class="s1">ranksIter </span><span class="s4">= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">(); </span><span class="s1">ranksIter </span><span class="s4">!= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">end</span><span class="s4">(); ++</span><span class="s1">ranksIter</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s1">REQUIRE</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">first </span><span class="s4">== </span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">first</span><span class="s4">);</span>
+        <span class="s1">REQUIRE_THAT</span><span class="s4">(</span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s1">Catch</span><span class="s4">::</span><span class="s1">Matchers</span><span class="s4">::</span><span class="s1">WithinAbs</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s5">0.000000002</span><span class="s4">));</span>
+
+        <span class="s1">testsIter</span><span class="s4">++;</span>
+    <span class="s4">}</span>
+<span class="s4">}</span>
+
+<span class="s1">TEST_CASE</span><span class="s4">(</span><span class="s2">&quot;Lots of Power Iterations (p = 20)&quot;</span><span class="s4">, </span><span class="s2">&quot;[General]&quot;</span><span class="s4">)</span>
+<span class="s4">{</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">vector</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">pair</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">&gt;&gt; </span><span class="s1">inputHolder </span><span class="s4">=</span>
+            <span class="s4">{</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;apple.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;gmail.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">, </span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;apple.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;gmail.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;aPPle.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;aPPle.com&quot;</span><span class="s4">, </span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;aPPle.com&quot;</span><span class="s4">}</span>
+            <span class="s4">};</span>
+
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">expectedOutput </span><span class="s4">=</span>
+            <span class="s4">{</span>
+                    <span class="s4">{</span><span class="s2">&quot;aPPle.com&quot;</span><span class="s4">, </span><span class="s5">18713899.0</span><span class="s4">/</span><span class="s5">181398528</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;apple.com&quot;</span><span class="s4">, </span><span class="s5">18713899.0</span><span class="s4">/</span><span class="s5">181398528</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s5">23361167.0</span><span class="s4">/</span><span class="s5">60466176</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;gmail.com&quot;</span><span class="s4">, </span><span class="s5">18713899.0</span><span class="s4">/</span><span class="s5">181398528</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s5">0.0</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">, </span><span class="s5">3065185.0</span><span class="s4">/</span><span class="s5">10077696</span><span class="s4">}</span>
+            <span class="s4">};</span>
+
+    <span class="s6">//Create a graph object</span>
+    <span class="s1">AdjacencyList generatedList</span><span class="s4">;</span>
+
+    <span class="s3">int </span><span class="s1">outDegree</span><span class="s4">{</span><span class="s5">0</span><span class="s4">};</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">string fromPage</span><span class="s4">;</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">string toPage</span><span class="s4">;</span>
+
+    <span class="s6">// Go through input and generate map / adjacency list</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s1">size_t i </span><span class="s4">= </span><span class="s5">0</span><span class="s4">; </span><span class="s1">i </span><span class="s4">&lt; </span><span class="s1">inputHolder</span><span class="s4">.</span><span class="s1">size</span><span class="s4">(); ++</span><span class="s1">i</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s1">fromPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">first</span><span class="s4">;</span>
+        <span class="s1">toPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">second</span><span class="s4">;</span>
+
+        <span class="s6">// Grab 'out degree' of 'fromPage'</span>
+        <span class="s1">outDegree </span><span class="s4">= </span><span class="s1">DegreeCounter</span><span class="s4">(</span><span class="s1">inputHolder</span><span class="s4">, </span><span class="s1">fromPage</span><span class="s4">);</span>
+
+        <span class="s6">// Add to map with 'toPage' key the 'fromPage' and it's 'd'</span>
+        <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">toPage</span><span class="s4">].</span><span class="s1">emplace_back</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s1">outDegree</span><span class="s4">);</span>
+
+        <span class="s6">// Ensure from page is mapped</span>
+        <span class="s3">if </span><span class="s4">(!</span><span class="s1">IsPageMapped</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()))</span>
+        <span class="s4">{</span>
+            <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">fromPage</span><span class="s4">];</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+    <span class="s6">//Created_Graph.PageRank(power_iterations);</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">ranks </span><span class="s4">= </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">PageRank</span><span class="s4">(</span><span class="s5">20</span><span class="s4">);</span>
+
+    <span class="s3">auto </span><span class="s1">testsIter </span><span class="s4">= </span><span class="s1">expectedOutput</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">();</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s3">auto </span><span class="s1">ranksIter </span><span class="s4">= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">(); </span><span class="s1">ranksIter </span><span class="s4">!= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">end</span><span class="s4">(); ++</span><span class="s1">ranksIter</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s1">REQUIRE</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">first </span><span class="s4">== </span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">first</span><span class="s4">);</span>
+        <span class="s1">REQUIRE_THAT</span><span class="s4">(</span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s1">Catch</span><span class="s4">::</span><span class="s1">Matchers</span><span class="s4">::</span><span class="s1">WithinAbs</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s5">0.000000002</span><span class="s4">));</span>
+
+        <span class="s1">testsIter</span><span class="s4">++;</span>
+    <span class="s4">}</span>
+<span class="s4">}</span>
+
+<span class="s1">TEST_CASE</span><span class="s4">(</span><span class="s2">&quot;p = 1&quot;</span><span class="s4">, </span><span class="s2">&quot;[General]&quot;</span><span class="s4">)</span>
+<span class="s4">{</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">vector</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">pair</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">&gt;&gt; </span><span class="s1">inputHolder </span><span class="s4">=</span>
+            <span class="s4">{</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;apple.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;gmail.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">, </span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;apple.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;gmail.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;aPPle.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;aPPle.com&quot;</span><span class="s4">, </span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;aPPle.com&quot;</span><span class="s4">}</span>
+            <span class="s4">};</span>
+
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">expectedOutput </span><span class="s4">=</span>
+            <span class="s4">{</span>
+                    <span class="s4">{</span><span class="s2">&quot;aPPle.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">6</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;apple.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">6</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">6</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;gmail.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">6</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">6</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">6</span><span class="s4">}</span>
+            <span class="s4">};</span>
+
+    <span class="s6">//Create a graph object</span>
+    <span class="s1">AdjacencyList generatedList</span><span class="s4">;</span>
+
+    <span class="s3">int </span><span class="s1">outDegree</span><span class="s4">{</span><span class="s5">0</span><span class="s4">};</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">string fromPage</span><span class="s4">;</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">string toPage</span><span class="s4">;</span>
+
+    <span class="s6">// Go through input and generate map / adjacency list</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s1">size_t i </span><span class="s4">= </span><span class="s5">0</span><span class="s4">; </span><span class="s1">i </span><span class="s4">&lt; </span><span class="s1">inputHolder</span><span class="s4">.</span><span class="s1">size</span><span class="s4">(); ++</span><span class="s1">i</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s1">fromPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">first</span><span class="s4">;</span>
+        <span class="s1">toPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">second</span><span class="s4">;</span>
+
+        <span class="s6">// Grab 'out degree' of 'fromPage'</span>
+        <span class="s1">outDegree </span><span class="s4">= </span><span class="s1">DegreeCounter</span><span class="s4">(</span><span class="s1">inputHolder</span><span class="s4">, </span><span class="s1">fromPage</span><span class="s4">);</span>
+
+        <span class="s6">// Add to map with 'toPage' key the 'fromPage' and it's 'd'</span>
+        <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">toPage</span><span class="s4">].</span><span class="s1">emplace_back</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s1">outDegree</span><span class="s4">);</span>
+
+        <span class="s6">// Ensure from page is mapped</span>
+        <span class="s3">if </span><span class="s4">(!</span><span class="s1">IsPageMapped</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()))</span>
+        <span class="s4">{</span>
+            <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">fromPage</span><span class="s4">];</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+    <span class="s6">//Created_Graph.PageRank(power_iterations);</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">ranks </span><span class="s4">= </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">PageRank</span><span class="s4">(</span><span class="s5">1</span><span class="s4">);</span>
+
+    <span class="s3">auto </span><span class="s1">testsIter </span><span class="s4">= </span><span class="s1">expectedOutput</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">();</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s3">auto </span><span class="s1">ranksIter </span><span class="s4">= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">(); </span><span class="s1">ranksIter </span><span class="s4">!= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">end</span><span class="s4">(); ++</span><span class="s1">ranksIter</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s1">REQUIRE</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">first </span><span class="s4">== </span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">first</span><span class="s4">);</span>
+        <span class="s1">REQUIRE_THAT</span><span class="s4">(</span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s1">Catch</span><span class="s4">::</span><span class="s1">Matchers</span><span class="s4">::</span><span class="s1">WithinAbs</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s5">0.000000002</span><span class="s4">));</span>
+
+        <span class="s1">testsIter</span><span class="s4">++;</span>
+    <span class="s4">}</span>
+<span class="s4">}</span>
+
+<span class="s1">TEST_CASE</span><span class="s4">(</span><span class="s2">&quot;Numbered and Symbolic Sites&quot;</span><span class="s4">, </span><span class="s2">&quot;[General]&quot;</span><span class="s4">)</span>
+<span class="s4">{</span>
+<span class="s1">std</span><span class="s4">::</span><span class="s1">vector</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">pair</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">&gt;&gt; </span><span class="s1">inputHolder </span><span class="s4">=</span>
+        <span class="s4">{</span>
+                <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;apple.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;123Kewl.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;123Kewl.com&quot;</span><span class="s4">, </span><span class="s2">&quot;twitter.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;123Kewl.com&quot;</span><span class="s4">, </span><span class="s2">&quot;8814StarTrek.org&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;twitter.com&quot;</span><span class="s4">, </span><span class="s2">&quot;8814StarTrek.org&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;twitter.com&quot;</span><span class="s4">, </span><span class="s2">&quot;$$$GetRich.net&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;$$$GetRich.net&quot;</span><span class="s4">, </span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;$$$GetRich.net&quot;</span><span class="s4">, </span><span class="s2">&quot;#34Football.com&quot;</span><span class="s4">}</span>
+        <span class="s4">};</span>
+
+<span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">expectedOutput </span><span class="s4">=</span>
+        <span class="s4">{</span>
+                <span class="s4">{</span><span class="s2">&quot;#34Football.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">224</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;$$$GetRich.net&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">224</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;123Kewl.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">224</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;8814StarTrek.org&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">112</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;apple.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">224</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">224</span><span class="s4">},</span>
+                <span class="s4">{</span><span class="s2">&quot;twitter.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">224</span><span class="s4">},</span>
+        <span class="s4">};</span>
+
+<span class="s6">//Create a graph object</span>
+<span class="s1">AdjacencyList generatedList</span><span class="s4">;</span>
+
+<span class="s3">int </span><span class="s1">outDegree</span><span class="s4">{</span><span class="s5">0</span><span class="s4">};</span>
+<span class="s1">std</span><span class="s4">::</span><span class="s1">string fromPage</span><span class="s4">;</span>
+<span class="s1">std</span><span class="s4">::</span><span class="s1">string toPage</span><span class="s4">;</span>
+
+<span class="s6">// Go through input and generate map / adjacency list</span>
+<span class="s3">for </span><span class="s4">(</span><span class="s1">size_t i </span><span class="s4">= </span><span class="s5">0</span><span class="s4">; </span><span class="s1">i </span><span class="s4">&lt; </span><span class="s1">inputHolder</span><span class="s4">.</span><span class="s1">size</span><span class="s4">(); ++</span><span class="s1">i</span><span class="s4">)</span>
+<span class="s4">{</span>
+    <span class="s1">fromPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">first</span><span class="s4">;</span>
+    <span class="s1">toPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">second</span><span class="s4">;</span>
+
+    <span class="s6">// Grab 'out degree' of 'fromPage'</span>
+    <span class="s1">outDegree </span><span class="s4">= </span><span class="s1">DegreeCounter</span><span class="s4">(</span><span class="s1">inputHolder</span><span class="s4">, </span><span class="s1">fromPage</span><span class="s4">);</span>
+
+    <span class="s6">// Add to map with 'toPage' key the 'fromPage' and it's 'd'</span>
+    <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">toPage</span><span class="s4">].</span><span class="s1">emplace_back</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s1">outDegree</span><span class="s4">);</span>
+
+    <span class="s6">// Ensure from page is mapped</span>
+    <span class="s3">if </span><span class="s4">(!</span><span class="s1">IsPageMapped</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()))</span>
+    <span class="s4">{</span>
+    <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">fromPage</span><span class="s4">];</span>
+    <span class="s4">}</span>
+<span class="s4">}</span>
+
+<span class="s6">//Created_Graph.PageRank(power_iterations);</span>
+<span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">ranks </span><span class="s4">= </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">PageRank</span><span class="s4">(</span><span class="s5">6</span><span class="s4">);</span>
+
+<span class="s3">auto </span><span class="s1">testsIter </span><span class="s4">= </span><span class="s1">expectedOutput</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">();</span>
+<span class="s3">for </span><span class="s4">(</span><span class="s3">auto </span><span class="s1">ranksIter </span><span class="s4">= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">(); </span><span class="s1">ranksIter </span><span class="s4">!= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">end</span><span class="s4">(); ++</span><span class="s1">ranksIter</span><span class="s4">)</span>
+<span class="s4">{</span>
+    <span class="s1">REQUIRE</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">first </span><span class="s4">== </span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">first</span><span class="s4">);</span>
+    <span class="s1">REQUIRE_THAT</span><span class="s4">(</span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s1">Catch</span><span class="s4">::</span><span class="s1">Matchers</span><span class="s4">::</span><span class="s1">WithinAbs</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s5">0.000000002</span><span class="s4">));</span>
+
+    <span class="s1">testsIter</span><span class="s4">++;</span>
+<span class="s4">}</span>
+<span class="s4">}</span>
+
+<span class="s1">TEST_CASE</span><span class="s4">(</span><span class="s2">&quot;Lots of Connects&quot;</span><span class="s4">, </span><span class="s2">&quot;[General]&quot;</span><span class="s4">)</span>
+<span class="s4">{</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">vector</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">pair</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">&gt;&gt; </span><span class="s1">inputHolder </span><span class="s4">=</span>
+            <span class="s4">{</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;myspace.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;google.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;twitter.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;stocks.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s2">&quot;IBM.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">, </span><span class="s2">&quot;twitter.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">, </span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">, </span><span class="s2">&quot;myspace.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">, </span><span class="s2">&quot;stocks.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;twitter.com&quot;</span><span class="s4">, </span><span class="s2">&quot;myspace.com&quot;</span><span class="s4">}</span>
+            <span class="s4">};</span>
+
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">expectedOutput </span><span class="s4">=</span>
+            <span class="s4">{</span>
+                    <span class="s4">{</span><span class="s2">&quot;facebook.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">28</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">42</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;IBM.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">42</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;myspace.com&quot;</span><span class="s4">, </span><span class="s5">17.0</span><span class="s4">/</span><span class="s5">84</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;stocks.com&quot;</span><span class="s4">, </span><span class="s5">5.0</span><span class="s4">/</span><span class="s5">84</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;twitter.com&quot;</span><span class="s4">, </span><span class="s5">5.0</span><span class="s4">/</span><span class="s5">84</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;youtube.com&quot;</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s5">42</span><span class="s4">}</span>
+            <span class="s4">};</span>
+
+<span class="s6">//Create a graph object</span>
+    <span class="s1">AdjacencyList generatedList</span><span class="s4">;</span>
+
+    <span class="s3">int </span><span class="s1">outDegree</span><span class="s4">{</span><span class="s5">0</span><span class="s4">};</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">string fromPage</span><span class="s4">;</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">string toPage</span><span class="s4">;</span>
+
+<span class="s6">// Go through input and generate map / adjacency list</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s1">size_t i </span><span class="s4">= </span><span class="s5">0</span><span class="s4">; </span><span class="s1">i </span><span class="s4">&lt; </span><span class="s1">inputHolder</span><span class="s4">.</span><span class="s1">size</span><span class="s4">(); ++</span><span class="s1">i</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s1">fromPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">first</span><span class="s4">;</span>
+        <span class="s1">toPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">second</span><span class="s4">;</span>
+
+        <span class="s6">// Grab 'out degree' of 'fromPage'</span>
+        <span class="s1">outDegree </span><span class="s4">= </span><span class="s1">DegreeCounter</span><span class="s4">(</span><span class="s1">inputHolder</span><span class="s4">, </span><span class="s1">fromPage</span><span class="s4">);</span>
+
+        <span class="s6">// Add to map with 'toPage' key the 'fromPage' and it's 'd'</span>
+        <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">toPage</span><span class="s4">].</span><span class="s1">emplace_back</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s1">outDegree</span><span class="s4">);</span>
+
+        <span class="s6">// Ensure from page is mapped</span>
+        <span class="s3">if </span><span class="s4">(!</span><span class="s1">IsPageMapped</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()))</span>
+        <span class="s4">{</span>
+            <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">fromPage</span><span class="s4">];</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+<span class="s6">//Created_Graph.PageRank(power_iterations);</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">ranks </span><span class="s4">= </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">PageRank</span><span class="s4">(</span><span class="s5">2</span><span class="s4">);</span>
+
+    <span class="s3">auto </span><span class="s1">testsIter </span><span class="s4">= </span><span class="s1">expectedOutput</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">();</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s3">auto </span><span class="s1">ranksIter </span><span class="s4">= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">(); </span><span class="s1">ranksIter </span><span class="s4">!= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">end</span><span class="s4">(); ++</span><span class="s1">ranksIter</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s1">REQUIRE</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">first </span><span class="s4">== </span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">first</span><span class="s4">);</span>
+        <span class="s1">REQUIRE_THAT</span><span class="s4">(</span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s1">Catch</span><span class="s4">::</span><span class="s1">Matchers</span><span class="s4">::</span><span class="s1">WithinAbs</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s5">0.000000002</span><span class="s4">));</span>
+
+        <span class="s1">testsIter</span><span class="s4">++;</span>
+    <span class="s4">}</span>
+<span class="s4">}</span>
+
+<span class="s1">TEST_CASE</span><span class="s4">(</span><span class="s2">&quot;Very Large Random&quot;</span><span class="s4">, </span><span class="s2">&quot;[General]&quot;</span><span class="s4">)</span>
+<span class="s4">{</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">vector</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">pair</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">&gt;&gt; </span><span class="s1">inputHolder </span><span class="s4">=</span>
+            <span class="s4">{</span>
+                    <span class="s4">{</span><span class="s2">&quot;samsung.com&quot;</span><span class="s4">, </span><span class="s2">&quot;chase.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;chase.com&quot;</span><span class="s4">, </span><span class="s2">&quot;pcbuildinguf.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;samsung.com&quot;</span><span class="s4">, </span><span class="s2">&quot;pcbuildinguf.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;python.org&quot;</span><span class="s4">, </span><span class="s2">&quot;ufl.edu&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;reactjs.org&quot;</span><span class="s4">, </span><span class="s2">&quot;python.org&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;getbootstrap.com&quot;</span><span class="s4">, </span><span class="s2">&quot;google.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;instagram.com&quot;</span><span class="s4">, </span><span class="s2">&quot;python.org&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;disney.com&quot;</span><span class="s4">, </span><span class="s2">&quot;chase.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;github.com&quot;</span><span class="s4">, </span><span class="s2">&quot;chase.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;chase.com&quot;</span><span class="s4">, </span><span class="s2">&quot;getbootstrap.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;disney.com&quot;</span><span class="s4">, </span><span class="s2">&quot;getbootstrap.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;python.org&quot;</span><span class="s4">, </span><span class="s2">&quot;google.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;pcbuildinguf.com&quot;</span><span class="s4">, </span><span class="s2">&quot;reactjs.org&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s2">&quot;reactjs.org&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s2">&quot;samsung.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;github.com&quot;</span><span class="s4">, </span><span class="s2">&quot;ufl.edu&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;getbootstrap.com&quot;</span><span class="s4">, </span><span class="s2">&quot;ufl.edu&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;getbootstrap.com&quot;</span><span class="s4">, </span><span class="s2">&quot;pcbuildinguf.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;samsung.com&quot;</span><span class="s4">, </span><span class="s2">&quot;reactjs.org&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;ufl.edu&quot;</span><span class="s4">, </span><span class="s2">&quot;getbootstrap.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;disney.com&quot;</span><span class="s4">, </span><span class="s2">&quot;google.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;disney.com&quot;</span><span class="s4">, </span><span class="s2">&quot;pcbuildinguf.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;reactjs.org&quot;</span><span class="s4">, </span><span class="s2">&quot;disney.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;reactjs.org&quot;</span><span class="s4">, </span><span class="s2">&quot;instagram.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;instagram.com&quot;</span><span class="s4">, </span><span class="s2">&quot;disney.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;instagram.com&quot;</span><span class="s4">, </span><span class="s2">&quot;chase.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;ufl.edu&quot;</span><span class="s4">, </span><span class="s2">&quot;python.org&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;instagram.com&quot;</span><span class="s4">, </span><span class="s2">&quot;ufl.edu&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s2">&quot;github.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;chase.com&quot;</span><span class="s4">, </span><span class="s2">&quot;samsung.com&quot;</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;disney.com&quot;</span><span class="s4">, </span><span class="s2">&quot;samsung.com&quot;</span><span class="s4">}</span>
+            <span class="s4">};</span>
+
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">expectedOutput </span><span class="s4">=</span>
+            <span class="s4">{</span>
+                    <span class="s4">{</span><span class="s2">&quot;chase.com&quot;</span><span class="s4">, </span><span class="s5">0.07</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;disney.com&quot;</span><span class="s4">, </span><span class="s5">0.06</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;getbootstrap.com&quot;</span><span class="s4">, </span><span class="s5">0.10</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;github.com&quot;</span><span class="s4">, </span><span class="s5">0.04</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;google.com&quot;</span><span class="s4">, </span><span class="s5">0.11</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;instagram.com&quot;</span><span class="s4">, </span><span class="s5">0.05</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;pcbuildinguf.com&quot;</span><span class="s4">, </span><span class="s5">0.09</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;python.org&quot;</span><span class="s4">, </span><span class="s5">0.13</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;reactjs.org&quot;</span><span class="s4">, </span><span class="s5">0.15</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;samsung.com&quot;</span><span class="s4">, </span><span class="s5">0.07</span><span class="s4">},</span>
+                    <span class="s4">{</span><span class="s2">&quot;ufl.edu&quot;</span><span class="s4">, </span><span class="s5">0.13</span><span class="s4">}</span>
+            <span class="s4">};</span>
+
+<span class="s6">//Create a graph object</span>
+    <span class="s1">AdjacencyList generatedList</span><span class="s4">;</span>
+
+    <span class="s3">int </span><span class="s1">outDegree</span><span class="s4">{</span><span class="s5">0</span><span class="s4">};</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">string fromPage</span><span class="s4">;</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">string toPage</span><span class="s4">;</span>
+
+<span class="s6">// Go through input and generate map / adjacency list</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s1">size_t i </span><span class="s4">= </span><span class="s5">0</span><span class="s4">; </span><span class="s1">i </span><span class="s4">&lt; </span><span class="s1">inputHolder</span><span class="s4">.</span><span class="s1">size</span><span class="s4">(); ++</span><span class="s1">i</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s1">fromPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">first</span><span class="s4">;</span>
+        <span class="s1">toPage </span><span class="s4">= </span><span class="s1">inputHolder</span><span class="s4">[</span><span class="s1">i</span><span class="s4">].</span><span class="s1">second</span><span class="s4">;</span>
+
+        <span class="s6">// Grab 'out degree' of 'fromPage'</span>
+        <span class="s1">outDegree </span><span class="s4">= </span><span class="s1">DegreeCounter</span><span class="s4">(</span><span class="s1">inputHolder</span><span class="s4">, </span><span class="s1">fromPage</span><span class="s4">);</span>
+
+        <span class="s6">// Add to map with 'toPage' key the 'fromPage' and it's 'd'</span>
+        <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">toPage</span><span class="s4">].</span><span class="s1">emplace_back</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s5">1.0</span><span class="s4">/</span><span class="s1">outDegree</span><span class="s4">);</span>
+
+        <span class="s6">// Ensure from page is mapped</span>
+        <span class="s3">if </span><span class="s4">(!</span><span class="s1">IsPageMapped</span><span class="s4">(</span><span class="s1">fromPage</span><span class="s4">, </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()))</span>
+        <span class="s4">{</span>
+            <span class="s1">generatedList</span><span class="s4">.</span><span class="s1">MapGetter</span><span class="s4">()[</span><span class="s1">fromPage</span><span class="s4">];</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+<span class="s6">//Created_Graph.PageRank(power_iterations);</span>
+    <span class="s1">std</span><span class="s4">::</span><span class="s1">map</span><span class="s4">&lt;</span><span class="s1">std</span><span class="s4">::</span><span class="s1">string</span><span class="s4">, </span><span class="s3">double</span><span class="s4">&gt; </span><span class="s1">ranks </span><span class="s4">= </span><span class="s1">generatedList</span><span class="s4">.</span><span class="s1">PageRank</span><span class="s4">(</span><span class="s5">17</span><span class="s4">);</span>
+
+    <span class="s3">auto </span><span class="s1">testsIter </span><span class="s4">= </span><span class="s1">expectedOutput</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">();</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s3">auto </span><span class="s1">ranksIter </span><span class="s4">= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">begin</span><span class="s4">(); </span><span class="s1">ranksIter </span><span class="s4">!= </span><span class="s1">ranks</span><span class="s4">.</span><span class="s1">end</span><span class="s4">(); ++</span><span class="s1">ranksIter</span><span class="s4">)</span>
+    <span class="s4">{</span>
+        <span class="s1">REQUIRE</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">first </span><span class="s4">== </span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">first</span><span class="s4">);</span>
+        <span class="s1">REQUIRE_THAT</span><span class="s4">(</span><span class="s1">ranksIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s1">Catch</span><span class="s4">::</span><span class="s1">Matchers</span><span class="s4">::</span><span class="s1">WithinAbs</span><span class="s4">(</span><span class="s1">testsIter</span><span class="s4">-&gt;</span><span class="s1">second</span><span class="s4">, </span><span class="s5">0.01</span><span class="s4">));</span>
+
+        <span class="s1">testsIter</span><span class="s4">++;</span>
+    <span class="s4">}</span>
+<span class="s4">}</span></pre>
+</body>
+</html>

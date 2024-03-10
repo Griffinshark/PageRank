@@ -1,15 +1,5 @@
 #include "AdjacencyList.h"
 
-void AdjacencyList::ageRank(int n)
-{
-
-}
-
-std::map<std::string, std::vector<std::pair<std::string, double>>>& AdjacencyList::MapGetter()
-{
-    return this->pageMap;
-}
-
 std::map<std::string, double> AdjacencyList::PageRank(int powerIterations)
 {
     // Initialize strings to ranks of (1/V)
@@ -25,23 +15,29 @@ std::map<std::string, double> AdjacencyList::PageRank(int powerIterations)
         return ranks;
     }
 
+    // Stores the parents and their degrees for the current page
     std::vector<std::pair<std::string, double>> currentPageParents;
+    // Iterates through the 'pageMap'
     auto mapIter = pageMap.begin();
+    // Used to tally up ranking for the current page
     double intermediateRanking{0};
+    // Used to either store the final map of ranks or act as an intermediate map for computation
     std::map<std::string, double> finalRanks;
 
-    for (size_t i = 1; i < powerIterations; ++i)
+    for (int i = 1; i < powerIterations; ++i)
     {
         // One power iteration
         // Go through each rank
         for (auto rankIter = ranks.begin(); rankIter != ranks.end(); ++rankIter)
         {
+
             currentPageParents = mapIter->second;
 
-            // Go through each parent of the current page and use their degrees * ranks = ranks[j]
+            // Go through each parent of the current page and use their degrees * ranks['their name']
             for (auto parentIter = currentPageParents.begin(); parentIter
                                                                != currentPageParents.end(); ++parentIter)
             {
+                // Calculate and add to ranking
                 intermediateRanking += parentIter->second * ranks[parentIter->first];
             }
 
@@ -77,4 +73,6 @@ std::map<std::string, double> AdjacencyList::PageRank(int powerIterations)
 
     return finalRanks;
 }
+
+std::map<std::string, std::vector<std::pair<std::string, double>>>& AdjacencyList::MapGetter() { return this->pageMap; }
 
