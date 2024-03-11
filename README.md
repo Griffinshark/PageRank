@@ -13,10 +13,12 @@ Clone the repo and run from main.
 
 # Runtime Guide
 1. The first command will be the "number of command lines to follow" SPACE "number of power iterations".
-2. Enter each site to site connection in the format: "outboundSite.com" SPACE "inboundSite.com".
-3. The program will then output each site's ranking.
+   **Example:** "4 2" -> 4 command lines to follow with 2 power iterations
+3. Enter each site to site connection in the format: "outboundSite.com" SPACE "inboundSite.com".
+   **Example:** "facebook.com gmail.com" -> gmail receives an incoming connection from facebook
+4. The program will then output each site's ranking.
 
 # Constraints
-- 1 <= p <= 10,000
-- 1 <= n <= 10,000
-- 1 <= Unique webpages or |V| <= 10000
+- 1 <= power iterations <= 10,000
+- 1 <= command lines <= 10,000
+- 1 <= Unique webpages <= 10000
