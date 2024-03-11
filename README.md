@@ -12,9 +12,9 @@ stop. In the case of this project we are simply applying a given and fixed power
 Clone the repo and run from main.
 
 # Runtime Guide
-1. The first command will be the "number of command lines to follow" SPACE "number of power iterations".
+1. The first command will be the "number of command lines to follow" SPACE "number of power iterations".<br>
    **Example:** "4 2" -> 4 command lines to follow with 2 power iterations
-3. Enter each site to site connection in the format: "outboundSite.com" SPACE "inboundSite.com".
+3. Enter each site to site connection in the format: "outboundSite.com" SPACE "inboundSite.com".<br>
    **Example:** "facebook.com gmail.com" -> gmail receives an incoming connection from facebook
 4. The program will then output each site's ranking.
 
